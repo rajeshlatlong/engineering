@@ -1,0 +1,51 @@
+<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <style type="text/css">
+    .center-block {
+    width:1500px;
+    padding:250px;
+    background-color:#eceadc;
+    color:#ec8007
+    }
+    </style>
+<body>
+<%= nav_bar fixed: :top, brand: "Engineering 2.0", responsive: true do %>
+    <%= menu_group do %>
+        <%= menu_item "Home", root_path %>
+        <%= menu_item "Login", new_user_session_path %>
+        <%= menu_item "SignUp", new_user_registration_path %>
+    <% end %>
+    <%= menu_group pull: :right do %>
+        <% if user_signed_in? %>
+            <li><%= link_to current_user.email, edit_user_registration_path %> </li>
+            <%= menu_item "Log Out", destroy_user_session_path, method: :delete %>
+        <%end%>
+     <%end%>
+<% end %>
+<% if user_signed_in? %>
+<div class="center-block">
+  <%= form_for :create, :url=>{:controller=>"secret_code",:action=>"create"} do |f|%>
+   <%= f.label :create_secret_codes %>
+   <%= f.select :desired_attribute, ['1', '10', '30'], :selected => '10'%>
+   <%= f.submit "Create" %>
+  <%end%>
+<br>
+<div>
+<h3>Created Secret Codes</h3>
+<table>
+<th>Secret Code</th><th>User Email</th>
+<% @codes.each do |c| %>
+<tr><td><%= c.secretcode %></td><td><%= c.email %></td></tr>
+<%end%>
+</table>
+</div>
+</div>
+<%else%>
+<div class="center-block">
+<h1> Engineering 2.0 </h1>
+</div>
+
+
+<%end%>
+<body>
+</html>
