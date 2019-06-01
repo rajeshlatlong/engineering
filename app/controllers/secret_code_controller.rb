@@ -8,7 +8,7 @@ class SecretCodeController < ApplicationController
           random_string = SecureRandom.hex
           SecretCode.create(email: current_user.email,secretcode: random_string)          
        end
-      
+       redirect_back(fallback_location: root_path) 
     end
 
 
